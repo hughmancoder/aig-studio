@@ -1,4 +1,4 @@
-# AIG (And-Inverter Graph)
+# AIG Studio
 
 **Tech and Tools:**
 ![C++17](https://img.shields.io/badge/C%2B%2B17-00599C?style=flat-square)
