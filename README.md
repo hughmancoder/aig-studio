@@ -20,13 +20,11 @@ This library has been updated to include an interactive React + WebAssembly Stud
 
 ## Features
 
-- **Multi-Format I/O:** Parse and export ASCII AIGER (`.aag`), binary AIGER (`.aig`), and BLIF (`.blif`).
-- **Structural Hashing (**`strash`**):** Unique-table deduplication with on-the-fly constant folding and two-level algebraic reduction.
-- **Dead-Node Sweeping (**`sweep`**):** Backward reachability pruning and duplicate gate merging.
-- **Tree Balancing (**`balance`**):** Min-depth restructuring of associative AND and XOR cones.
-- **DAG-Aware Rewriting (**`rewrite`**):** 4-input cut enumeration with a 16-bit optimal AIG database and MFFC gain evaluation.
-- **Analysis & Visualisation:** Depth, fan-out, truth tables, equivalence checking, Graphviz DOT export, and ASCII cone trees.
-- **Boolean Expression Engine:** Parse multi-output expressions (`*`, `+`/`|`, `^`, `~`/`!`/`'`) into JSON DAGs for CLI and web.
+- **Multi-Format Support:** Import and export `.aag`, `.aig`, and `.blif` circuit files.
+- **Deduplication (`strash`):** Reuses identical gates and simplifies trivial logic on the fly.
+- **Dead-Code Removal (`sweep`):** Removes unused gates that never reach an output.
+- **Depth Reduction (`balance`):** Rebuilds deep gate chains into shallower, faster trees.
+- **Boolean Expression Parser:** Converts text equations (`*`, `+`/`|`, `^`, `~`/`!`/`'`) into logic graphs.
 
 ---
 

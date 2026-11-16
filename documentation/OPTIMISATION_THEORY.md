@@ -8,7 +8,7 @@ This document outlines the logic optimisation passes implemented in `src/optimiz
 
 Structural hashing ensures every unique unordered pair of fanin literals maps to at most one canonical AND gate:
 
-$$\text{unique\_table}: (f_0, f_1) \mapsto \text{Lit} \quad \text{where } f_0 \le f_1$$
+$$\text{unique table}: (f_0, f_1) \mapsto \text{Lit} \quad \text{where } f_0 \le f_1$$
 
 Before inserting into the unique table, `get_or_create_and(f0, f1)` applies constant folding, trivial identities, and two-level algebraic reductions:
 
