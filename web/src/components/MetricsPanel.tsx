@@ -17,13 +17,13 @@ export const SimplifiedExpressionBar: React.FC<SimplifiedExpressionBarProps> = (
   };
 
   return (
-    <section className="bg-white border border-[#d0d7de] rounded-md px-4 py-3 flex items-center justify-between gap-4">
+    <section className="bg-white border border-[#B6BFB8] rounded-md px-4 py-3 flex items-center justify-between gap-4">
       <div className="min-w-0 flex-1">
-        <div className="text-[11px] font-semibold uppercase tracking-wider mb-0.5 text-[#656d76]">
+        <div className="text-[11px] font-semibold uppercase tracking-wider mb-0.5 text-[#909692]">
           Simplified Expression
         </div>
         <div
-          className="text-base md:text-lg font-mono font-semibold truncate text-[#1f2328]"
+          className="text-base md:text-lg font-mono font-semibold truncate text-[#101411]"
           title={simplifiedExpr}
         >
           {simplifiedExpr || '(empty)'}
@@ -33,7 +33,7 @@ export const SimplifiedExpressionBar: React.FC<SimplifiedExpressionBarProps> = (
       <button
         type="button"
         onClick={handleCopy}
-        className="px-3 py-1.5 rounded-md border border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#eef1f4] active:bg-[#e7ebef] text-[#24292f] text-xs font-medium shrink-0 cursor-pointer transition-colors"
+        className="px-3 py-1.5 rounded-md border border-[#B6BFB8] bg-[#F2F5F3] hover:bg-[#E4EBE6] text-[#232925] text-xs font-medium shrink-0 cursor-pointer transition-colors"
       >
         {copied ? 'Copied' : 'Copy'}
       </button>
@@ -67,64 +67,64 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
       : 0;
 
   return (
-    <section className="bg-white border border-[#d0d7de] rounded-md grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-[#d0d7de] text-[#1f2328]">
+    <section className="bg-white border border-[#B6BFB8] rounded-md grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-[#B6BFB8] text-[#101411]">
       <div className="p-4 flex flex-col justify-between">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#656d76]">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
             AND Gates
           </span>
           {andReduction > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#dafbe1] text-[#1a7f37] border border-[#aceebb]">
+            <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#BFFFD1] text-[#08872B] border border-[#8CF2A6]">
               -{andReduction}%
             </span>
           )}
         </div>
         <div className="font-mono text-base font-semibold mt-1.5">
-          <span className="text-[#656d76]">{stats.initial_and_nodes}</span>
-          <span className="mx-1.5 text-[#656d76]">&rarr;</span>
-          <span className="text-[#1f2328]">{stats.final_and_nodes}</span>
+          <span className="text-[#909692]">{stats.initial_and_nodes}</span>
+          <span className="mx-1.5 text-[#909692]">&rarr;</span>
+          <span className="text-[#101411]">{stats.final_and_nodes}</span>
         </div>
       </div>
 
       <div className="p-4 flex flex-col justify-between">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#656d76]">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
             Logic Depth
           </span>
           {levelReduction > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#dafbe1] text-[#1a7f37] border border-[#aceebb]">
+            <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#BFFFD1] text-[#08872B] border border-[#8CF2A6]">
               -{levelReduction}%
             </span>
           )}
         </div>
         <div className="font-mono text-base font-semibold mt-1.5">
-          <span className="text-[#656d76]">Level {stats.initial_levels}</span>
-          <span className="mx-1.5 text-[#656d76]">&rarr;</span>
-          <span className="text-[#1f2328]">Level {stats.final_levels}</span>
+          <span className="text-[#909692]">Level {stats.initial_levels}</span>
+          <span className="mx-1.5 text-[#909692]">&rarr;</span>
+          <span className="text-[#101411]">Level {stats.final_levels}</span>
         </div>
       </div>
 
       <div className="p-4 flex flex-col justify-between">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#656d76]">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
           Primary I/O
         </span>
-        <div className="font-mono text-sm font-medium mt-1.5 text-[#1f2328]">
+        <div className="font-mono text-sm font-medium mt-1.5 text-[#232925]">
           {stats.num_inputs} Inputs &middot; {stats.num_outputs} Outputs
           {outputs.length > 1 ? ` (${outputs.length})` : ''}
         </div>
       </div>
 
       <div className="p-4 flex flex-col justify-between">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#656d76]">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
           Equivalence
         </span>
         <div
           className={`text-sm font-semibold mt-1.5 ${
             equivalent === true
-              ? 'text-[#1a7f37]'
+              ? 'text-[#08872B]'
               : equivalent === false
-              ? 'text-[#cf222e]'
-              : 'text-[#656d76]'
+              ? 'text-[#FA4549]'
+              : 'text-[#909692]'
           }`}
         >
           {equivalent === true

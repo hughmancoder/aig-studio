@@ -28,13 +28,13 @@ export const AigCustomEdge = memo(({
   const edgeStyle = isInverted
     ? {
         ...style,
-        stroke: '#e11d48',
+        stroke: '#FA4549',
         strokeWidth: 1.75,
         strokeDasharray: '5 4',
       }
     : {
         ...style,
-        stroke: '#64748b',
+        stroke: '#909692',
         strokeWidth: 1.75,
       };
 
@@ -49,7 +49,7 @@ export const AigCustomEdge = memo(({
               transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
               pointerEvents: 'all',
             }}
-            className="w-3.5 h-3.5 rounded-full border-2 border-rose-600 bg-white z-10"
+            className="w-3.5 h-3.5 rounded-full border-2 border-[#FA4549] bg-white z-10"
             title="Inverted / Complemented Edge (NOT)"
           />
         </EdgeLabelRenderer>

@@ -89,11 +89,11 @@ export const EquationInputBar: React.FC<EquationInputBarProps> = ({
   };
 
   return (
-    <section className="flex flex-col gap-3 w-full bg-white border border-[#d0d7de] rounded-md p-4">
+    <section className="flex flex-col gap-3 w-full bg-white border border-[#B6BFB8] rounded-md p-4">
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="equation-input"
-          className="text-[11px] font-semibold uppercase tracking-wider text-[#656d76]"
+          className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]"
         >
           Input
         </label>
@@ -105,13 +105,13 @@ export const EquationInputBar: React.FC<EquationInputBarProps> = ({
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="e.g. F = (A & B) | (A & ~B)"
-            className="flex-1 font-mono text-sm px-3 py-1.5 rounded-md border border-[#d0d7de] bg-[#f6f8fa] focus:bg-white text-[#1f2328] placeholder-[#6e7781] focus:outline-none focus:border-[#0969da] focus:ring-2 focus:ring-[#0969da]/20 transition-colors"
+            className="flex-1 font-mono text-sm px-3 py-1.5 rounded-md border border-[#B6BFB8] bg-[#F2F5F3] focus:bg-white text-[#101411] placeholder-[#909692] focus:outline-none focus:border-[#1A61FE] focus:ring-2 focus:ring-[#1A61FE]/20 transition-colors"
           />
           <button
             type="button"
             onClick={onSynthesize}
             disabled={!value.trim()}
-            className="px-4 py-1.5 rounded-md text-sm font-medium bg-[#f6f8fa] hover:bg-[#eef1f4] active:bg-[#e7ebef] text-[#24292f] border border-[#d0d7de] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors shrink-0"
+            className="px-4 py-1.5 rounded-md text-sm font-medium bg-[#F2F5F3] hover:bg-[#E4EBE6] text-[#232925] border border-[#B6BFB8] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors shrink-0"
           >
             Simplify
           </button>
@@ -135,8 +135,8 @@ export const EquationInputBar: React.FC<EquationInputBarProps> = ({
               title={preset.desc}
               className={`px-2.5 py-1 rounded-md border text-xs font-mono transition-colors cursor-pointer ${
                 isActive
-                  ? 'bg-[#eaeef2] border-[#8c959f] text-[#1f2328] font-semibold'
-                  : 'bg-[#f6f8fa] hover:bg-[#eef1f4] border-[#d0d7de] text-[#24292f]'
+                  ? 'bg-[#E4EBE6] border-[#909692] text-[#101411] font-semibold'
+                  : 'bg-[#F2F5F3] hover:bg-[#E4EBE6] border-[#B6BFB8] text-[#232925]'
               }`}
             >
               {preset.name}

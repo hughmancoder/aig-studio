@@ -88,7 +88,7 @@ function getLayoutedElements(graphData: AigGraphData) {
         type: MarkerType.ArrowClosed,
         width: 13,
         height: 13,
-        color: isInverted ? '#e11d48' : '#64748b',
+        color: isInverted ? '#FA4549' : '#909692',
       },
     };
   });
@@ -127,20 +127,20 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
   }, [rfInstance, layoutedNodes]);
 
   return (
-    <div className="flex flex-col w-full bg-white border border-[#d0d7de] rounded-md overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-2.5 border-b border-[#d0d7de] bg-[#f6f8fa]">
+    <div className="flex flex-col w-full bg-white border border-[#B6BFB8] rounded-md overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-2.5 border-b border-[#B6BFB8] bg-[#F2F5F3]">
         <div className="flex items-center gap-4">
           <button
             type="button"
             onClick={() => onTabChange('initial')}
             className={`inline-flex items-center gap-1.5 text-sm cursor-pointer transition-colors ${
               activeTab === 'initial'
-                ? 'font-semibold text-[#1f2328]'
-                : 'font-normal text-[#656d76] hover:text-[#1f2328]'
+                ? 'font-semibold text-[#101411]'
+                : 'font-normal text-[#909692] hover:text-[#101411]'
             }`}
           >
             <span>Initial AIG</span>
-            <span className="bg-[#eaeef2] text-[#1f2328] rounded-full px-2 py-0.5 text-xs font-medium">
+            <span className="bg-[#E4EBE6] text-[#101411] rounded-full px-2 py-0.5 text-xs font-medium">
               {initialGateCount}
             </span>
           </button>
@@ -150,36 +150,36 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
             onClick={() => onTabChange('simplified')}
             className={`inline-flex items-center gap-1.5 text-sm cursor-pointer transition-colors ${
               activeTab === 'simplified'
-                ? 'font-semibold text-[#1f2328]'
-                : 'font-normal text-[#656d76] hover:text-[#1f2328]'
+                ? 'font-semibold text-[#101411]'
+                : 'font-normal text-[#909692] hover:text-[#101411]'
             }`}
           >
             <span>Simplified AIG</span>
-            <span className="bg-[#eaeef2] text-[#1f2328] rounded-full px-2 py-0.5 text-xs font-medium">
+            <span className="bg-[#E4EBE6] text-[#101411] rounded-full px-2 py-0.5 text-xs font-medium">
               {simplifiedGateCount}
             </span>
           </button>
         </div>
 
-        <div className="flex items-center gap-3 text-xs font-mono text-[#656d76]">
+        <div className="flex items-center gap-3 text-xs font-mono text-[#232925]">
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 inline-block" /> PI
+            <span className="w-2.5 h-2.5 rounded-full bg-[#3094FF] inline-block" /> PI
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block" /> AND
+            <span className="w-2.5 h-2.5 rounded-full bg-[#4956E5] inline-block" /> AND
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" /> PO
+            <span className="w-2.5 h-2.5 rounded-full bg-[#DA7210] inline-block" /> PO
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full border-2 border-rose-600 inline-block" /> NOT
+            <span className="w-2.5 h-2.5 rounded-full border-2 border-[#FA4549] inline-block" /> NOT
           </span>
         </div>
       </div>
 
       <div className="relative h-[500px] w-full">
         {nodes.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full font-mono text-sm text-[#656d76]">
+          <div className="flex flex-col items-center justify-center h-full font-mono text-sm text-[#909692]">
             <span>No AIG nodes in graph</span>
             <span className="text-xs mt-1">Enter a Boolean equation above</span>
           </div>
@@ -199,14 +199,14 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
             proOptions={{ hideAttribution: true }}
           >
             <Background
-              color="#d8dee4"
+              color="#E4EBE6"
               gap={20}
               size={1}
               variant={BackgroundVariant.Dots}
             />
             <Controls
               showInteractive={false}
-              className="!bg-[#f6f8fa] !border-[#d0d7de] !fill-[#24292f] !text-[#24292f] !shadow-none !rounded-md"
+              className="!bg-[#F2F5F3] !border-[#B6BFB8] !fill-[#232925] !text-[#232925] !shadow-none !rounded-md"
             />
           </ReactFlow>
         )}
