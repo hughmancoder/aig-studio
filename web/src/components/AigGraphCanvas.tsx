@@ -36,8 +36,8 @@ const edgeTypes: EdgeTypes = {
   aigEdge: AigCustomEdge as any,
 };
 
-const NODE_WIDTH = 96;
-const NODE_HEIGHT = 40;
+const NODE_WIDTH = 48;
+const NODE_HEIGHT = 48;
 
 function getLayoutedElements(graphData: AigGraphData) {
   const dagreGraph = new dagre.graphlib.Graph();
@@ -86,9 +86,9 @@ function getLayoutedElements(graphData: AigGraphData) {
       data: { inverted: isInverted },
       markerEnd: {
         type: MarkerType.ArrowClosed,
-        width: 13,
-        height: 13,
-        color: isInverted ? '#FA4549' : '#909692',
+        width: 14,
+        height: 14,
+        color: '#101411',
       },
     };
   });
@@ -163,16 +163,16 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
 
         <div className="flex items-center gap-3 text-xs font-mono text-[#232925]">
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#3094FF] inline-block" /> PI
+            <span className="w-3 h-3 rounded-xs border border-[#101411] bg-[#8DD6FF]/40 inline-block" /> PI
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#4956E5] inline-block" /> AND
+            <span className="w-3 h-3 rounded-full border border-[#101411] bg-white inline-block" /> AND (&amp;)
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#DA7210] inline-block" /> PO
+            <span className="w-3 h-3 rounded-xs border border-[#101411] bg-[#BFFFD1]/60 inline-block" /> PO
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full border-2 border-[#FA4549] inline-block" /> NOT
+            <span className="w-2.5 h-2.5 rounded-full bg-[#101411] inline-block" /> NOT
           </span>
         </div>
       </div>
