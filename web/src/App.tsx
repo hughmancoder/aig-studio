@@ -1,52 +1,54 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { Cpu, AlertCircle, Sun, Moon } from 'lucide-react';
 import { useAigEngine } from './hooks/useAigEngine';
 import type { AigProcessResult } from './lib/aigTypes';
+import { synthesizeAndOptimizeTS } from './lib/aigEngine';
 import { AigGraphCanvas } from './components/AigGraphCanvas';
 import { EquationInputBar } from './components/EquationInputBar';
 import { PipelineControls, type ViewMode } from './components/PipelineControls';
 import { MetricsPanel } from './components/MetricsPanel';
 
+const DEFAULT_EQUATION = 'F = A & B & A & C';
+const DEFAULT_PASSES = ['strash', 'balance', 'rewrite'];
+
 export function App() {
   const { simplifyEquation, isWasmLoaded, isLoading } = useAigEngine();
 
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [equation, setEquation] = useState<string>('F = A & B & A & C');
-  const [selectedPasses, setSelectedPasses] = useState<string[]>([
-    'strash',
-    'balance',
-    'rewrite',
-  ]);
-  // Default to 'optimized' single tree view as requested by user
+  const [equation, setEquation] = useState<string>(DEFAULT_EQUATION);
+  const [selectedPasses, setSelectedPasses] = useState<string[]>(DEFAULT_PASSES);
   const [viewMode, setViewMode] = useState<ViewMode>('optimized');
-  const [result, setResult] = useState<AigProcessResult | null>(null);
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [result, setResult] = useState<AigProcessResult | null>(() =>
+    synthesizeAndOptimizeTS(DEFAULT_EQUATION, DEFAULT_PASSES)
+  );
 
   const isDark = theme === 'dark';
 
-  const handleSynthesize = useCallback(() => {
-    if (!equation.trim()) return;
-    setIsProcessing(true);
-    setTimeout(() => {
-      const res = simplifyEquation(equation, selectedPasses);
-      setResult(res);
-      setIsProcessing(false);
-    }, 40);
-  }, [equation, selectedPasses, simplifyEquation]);
+  const runSynthesize = (nextEquation: string, nextPasses: string[]) => {
+    if (!nextEquation.trim()) return;
+    setResult(simplifyEquation(nextEquation, nextPasses));
+  };
 
-  // Initial synthesis on mount
-  useEffect(() => {
-    handleSynthesize();
-  }, [handleSynthesize]);
+  const handleSynthesize = () => {
+    runSynthesize(equation, selectedPasses);
+  };
+
+  const handleSelectPreset = (presetEquation: string) => {
+    setEquation(presetEquation);
+    runSynthesize(presetEquation, selectedPasses);
+  };
 
   const togglePass = (pass: string) => {
-    setSelectedPasses((prev) =>
-      prev.includes(pass) ? prev.filter((p) => p !== pass) : [...prev, pass]
-    );
+    const nextPasses = selectedPasses.includes(pass)
+      ? selectedPasses.filter((p) => p !== pass)
+      : [...selectedPasses, pass];
+    setSelectedPasses(nextPasses);
+    runSynthesize(equation, nextPasses);
   };
 
   const setRecipe = (passes: string[]) => {
     setSelectedPasses(passes);
+    runSynthesize(equation, passes);
   };
 
   const toggleTheme = () => {
@@ -107,7 +109,7 @@ export function App() {
             ) : (
               <>
                 <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-                <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                <span className={`font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
                   {isWasmLoaded ? 'Wasm C++ Engine' : 'AIG Synthesis Engine'}
                 </span>
               </>
@@ -154,8 +156,8 @@ export function App() {
         <EquationInputBar
           value={equation}
           onChange={setEquation}
+          onSelectPreset={handleSelectPreset}
           onSynthesize={handleSynthesize}
-          isProcessing={isProcessing}
           theme={theme}
         />
 

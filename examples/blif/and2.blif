@@ -1,1 +1,8 @@
+.model and2
+.inputs A B
+.outputs Y
 
+.names A B Y
+11 1
+
+.end

@@ -1,43 +1,90 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Iinclude -O2
+CXXFLAGS = -std=c++17 -Wall -Wextra -Isrc -O2
+
+# Core library source files
+LIB_SRCS = src/aig.cpp src/aiger.cpp src/blif.cpp src/optimizer.cpp src/graph.cpp src/expr.cpp src/aig_facade.cpp
+HEADERS  = src/aig.hpp src/aiger.hpp src/blif.hpp src/optimizer.hpp src/graph.hpp src/expr.hpp src/aig_facade.hpp
 
 # Default build target
 all: aig
 
-## Helper macro
+FILE ?= examples/and2.aag
 
-ifndef FILE
-	FILE := examples/and2.aag   # default
-endif
+# Build the main CLI executable (aig)
+aig: src/main.cpp $(LIB_SRCS) $(HEADERS)
+	$(CXX) $(CXXFLAGS) -o ./aig src/main.cpp $(LIB_SRCS)
 
-# Build the main program (aig)
-aig: src/main.cpp src/aig.cpp
-	$(CXX) $(CXXFLAGS) -o ./aig src/main.cpp src/aig.cpp
-
-.PHONY: main # special target in a Makefile that tells make the target is not a real file
-main:
+.PHONY: main
+main: aig
 	./aig
 
-write_to_aag: aig
-	@mkdir -p build
-	@./aig write $(FILE) $(OUT)
-	@echo "Wrote $(OUT)"
+show_stats: aig
+	@./aig stats $(FILE)
 
 truth_table: aig
 	@./aig truth_table $(FILE)
 
-show_stats: aig
-	@./aig stats $(FILE)
+network: aig
+	@./aig network $(FILE)
+
+tree: aig
+	@./aig tree $(FILE)
+
+dot: aig
+	@./aig dot $(FILE) $(OUT)
+
+sweep: aig
+	@./aig sweep $(FILE) $(OUT)
+
+balance: aig
+	@./aig balance $(FILE) $(OUT)
+
+rewrite: aig
+	@./aig rewrite $(FILE) $(OUT)
+
+optimize: aig
+	@./aig optimize $(FILE) $(OUT)
+
+write_to_aag: aig
+	@./aig write $(FILE) $(OUT)
+
+write_to_aig: aig
+	@./aig write_aig $(FILE) $(OUT)
+
+write_to_blif: aig
+	@./aig write_blif $(FILE) $(OUT)
 
 .PHONY: test
 test: run_tests
 	@./run_tests
 
-# builds test binary
-run_tests: src/aig.cpp tests/test_aig.cpp
-	$(CXX) $(CXXFLAGS) -o ./run_tests src/aig.cpp tests/test_aig.cpp
+# Build test runner
+run_tests: tests/test_aig.cpp $(LIB_SRCS) $(HEADERS)
+	$(CXX) $(CXXFLAGS) -Itests -o ./run_tests tests/test_aig.cpp $(LIB_SRCS)
 
 .PHONY: clean
 clean:
 	rm -f ./aig ./run_tests
+
+# Simplify a Boolean expression from the CLI (prints JSON)
+#   make simplify EXPR="(A & B) | (A & ~B)" PASSES=strash,rewrite,balance
+EXPR   ?= (A & B) | (A & ~B)
+PASSES ?= strash,rewrite,balance,rewrite
+simplify: aig
+	@./aig simplify "$(EXPR)" "$(PASSES)"
+
+# ---- WebAssembly + web UI (requires Emscripten `emcc` on PATH for Wasm) ----
+.PHONY: wasm web web-install web-build
+wasm:
+	@./scripts/build_wasm.sh
+
+web-install:
+	@$(MAKE) -C web install
+
+web:
+	@$(MAKE) -C web dev
+
+web-build:
+	@$(MAKE) -C web build
+

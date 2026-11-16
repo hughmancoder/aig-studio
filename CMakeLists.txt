@@ -1,18 +1,26 @@
 cmake_minimum_required(VERSION 3.16)
-project(tiny_aig LANGUAGES CXX)
+project(aig_package LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(tiny_aig INTERFACE)
-target_include_directories(tiny_aig INTERFACE include)
-
-add_executable(tests
-    tests/test_parse.cpp
+add_library(aig_lib STATIC
+    src/aig.cpp
+    src/aiger.cpp
+    src/blif.cpp
+    src/optimizer.cpp
+    src/graph.cpp
+    src/expr.cpp
+    src/aig_facade.cpp
 )
-target_include_directories(tests PRIVATE tests/ext)
-target_link_libraries(tests PRIVATE tiny_aig)
-add_test(NAME parse_simple COMMAND tests)
+target_include_directories(aig_lib PUBLIC src)
+target_compile_options(aig_lib PRIVATE -Wall -Wextra)
 
-# Allow `TEST_DATA_DIR` constant in code
-target_compile_definitions(tests PRIVATE TEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests")
+add_executable(aig src/main.cpp)
+target_link_libraries(aig PRIVATE aig_lib)
+
+enable_testing()
+add_executable(run_tests tests/test_aig.cpp)
+target_include_directories(run_tests PRIVATE tests)
+target_link_libraries(run_tests PRIVATE aig_lib)
+add_test(NAME aig_tests COMMAND run_tests WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,14 +1,16 @@
 # Ignore macOS system files
 .DS_Store
 
-
 # Ignore build and binary files
 bin/
+build/
 *.o
 *.out
 *.exe
 main
-run_tests
+/aig
+/run_tests
+web/src/wasm/*.wasm
 
 # Ignore editor and IDE files
 .vscode/
@@ -18,3 +20,6 @@ run_tests
 # Ignore other common files
 *.log
 *.tmp
+node_modules/
+web/node_modules/
+web/dist/
