@@ -108,6 +108,14 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
     [data]
   );
 
+  const graphKey = useMemo(
+    () =>
+      `${activeTab}-${layoutedNodes
+        .map((n) => `${n.id}@${n.position.x},${n.position.y}`)
+        .join(';')}`,
+    [activeTab, layoutedNodes]
+  );
+
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
   const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
@@ -119,12 +127,12 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
 
   useEffect(() => {
     if (rfInstance && layoutedNodes.length > 0) {
-      const id = requestAnimationFrame(() => {
-        rfInstance.fitView({ padding: 0.25, duration: 150 });
-      });
-      return () => cancelAnimationFrame(id);
+      const timer = window.setTimeout(() => {
+        rfInstance.fitView({ padding: 0.2, duration: 120 });
+      }, 50);
+      return () => window.clearTimeout(timer);
     }
-  }, [rfInstance, layoutedNodes]);
+  }, [rfInstance, graphKey, layoutedNodes.length]);
 
   return (
     <div className="flex flex-col w-full bg-white border border-[#B6BFB8] rounded-md overflow-hidden">
@@ -177,7 +185,7 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
         </div>
       </div>
 
-      <div className="relative h-[500px] w-full">
+      <div className="relative h-[640px] w-full">
         {nodes.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full font-mono text-sm text-[#909692]">
             <span>No AIG nodes in graph</span>
@@ -185,6 +193,7 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
           </div>
         ) : (
           <ReactFlow
+            key={graphKey}
             nodes={nodes}
             edges={edges}
             onInit={setRfInstance}
@@ -193,7 +202,7 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             fitView
-            fitViewOptions={{ padding: 0.25 }}
+            fitViewOptions={{ padding: 0.2 }}
             minZoom={0.2}
             maxZoom={2.5}
             proOptions={{ hideAttribution: true }}
