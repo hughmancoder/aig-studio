@@ -17,7 +17,7 @@ export const SimplifiedExpressionBar: React.FC<SimplifiedExpressionBarProps> = (
   };
 
   return (
-    <section className="bg-white border border-[#B6BFB8] rounded-md px-4 py-3 flex items-center justify-between gap-4">
+    <section className="bg-white border border-[#B6BFB8] rounded-md px-4 py-2.5 flex items-center justify-between gap-4">
       <div className="min-w-0 flex-1">
         <div className="text-[11px] font-semibold uppercase tracking-wider mb-0.5 text-[#909692]">
           Simplified Expression
@@ -62,7 +62,7 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({ stats }) => {
 
   return (
     <section className="bg-white border border-[#B6BFB8] rounded-md grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-[#B6BFB8] text-[#101411]">
-      <div className="p-4 flex flex-col justify-between">
+      <div className="p-3 flex flex-col justify-between">
         <div className="flex items-center justify-between gap-2">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
             AND Gates
@@ -73,14 +73,14 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({ stats }) => {
             </span>
           )}
         </div>
-        <div className="font-mono text-base font-semibold mt-1.5">
+        <div className="font-mono text-base font-semibold mt-1">
           <span className="text-[#909692]">{stats.initial_and_nodes}</span>
           <span className="mx-1.5 text-[#909692]">&rarr;</span>
           <span className="text-[#101411]">{stats.final_and_nodes}</span>
         </div>
       </div>
 
-      <div className="p-4 flex flex-col justify-between">
+      <div className="p-3 flex flex-col justify-between">
         <div className="flex items-center justify-between gap-2">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
             Logic Depth
@@ -91,7 +91,7 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({ stats }) => {
             </span>
           )}
         </div>
-        <div className="font-mono text-base font-semibold mt-1.5">
+        <div className="font-mono text-base font-semibold mt-1">
           <span className="text-[#909692]">Level {stats.initial_levels}</span>
           <span className="mx-1.5 text-[#909692]">&rarr;</span>
           <span className="text-[#101411]">Level {stats.final_levels}</span>

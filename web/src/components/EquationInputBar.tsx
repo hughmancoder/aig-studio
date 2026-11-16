@@ -59,7 +59,7 @@ export const EquationInputBar: React.FC<EquationInputBarProps> = ({
   };
 
   return (
-    <section className="flex flex-col gap-3 w-full bg-white border border-[#B6BFB8] rounded-md p-4">
+    <section className="flex flex-col gap-2.5 w-full bg-white border border-[#B6BFB8] rounded-md p-3">
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="equation-input"

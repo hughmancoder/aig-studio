@@ -136,7 +136,7 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
 
   return (
     <div className="flex flex-col w-full bg-white border border-[#B6BFB8] rounded-md overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-2.5 border-b border-[#B6BFB8] bg-[#F2F5F3]">
+      <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-2 border-b border-[#B6BFB8] bg-[#F2F5F3]">
         <div className="flex items-center gap-4">
           <button
             type="button"
@@ -185,7 +185,7 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
         </div>
       </div>
 
-      <div className="relative h-[640px] w-full">
+      <div className="relative h-[calc(100vh-350px)] min-h-[320px] max-h-[460px] w-full">
         {nodes.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full font-mono text-sm text-[#909692]">
             <span>No AIG nodes in graph</span>
