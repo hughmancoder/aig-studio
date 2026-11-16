@@ -38,9 +38,9 @@ export function App() {
       : result?.initial_graph || { nodes: [], edges: [] };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f6f8fa] text-[#1f2328]">
-      <header className="flex items-center px-6 py-3.5 border-b bg-[#f6f8fa] border-[#d0d7de]">
-        <h1 className="text-sm font-semibold tracking-tight text-[#1f2328]">
+    <div className="flex flex-col min-h-screen bg-[#F2F5F3] text-[#101411]">
+      <header className="flex items-center px-6 py-3.5 border-b bg-[#F2F5F3] border-[#B6BFB8]">
+        <h1 className="text-sm font-semibold tracking-tight text-[#101411]">
           And-Inverter Graph Logic Simplifier
         </h1>
       </header>
@@ -54,7 +54,7 @@ export function App() {
         />
 
         {result?.status === 'error' && (
-          <div className="px-4 py-3 rounded-md border text-sm font-mono bg-[#ffebe9] border-[#ff8182] text-[#cf222e]">
+          <div className="px-4 py-3 rounded-md border text-sm font-mono bg-[#FFE2F3]/50 border-[#FFABA8] text-[#FA4549]">
             Error: {result.error_message}
           </div>
         )}
