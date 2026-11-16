@@ -21,7 +21,8 @@ interface AigGraphCanvasProps {
   data: AigGraphData;
   activeTab: GraphTab;
   onTabChange: (tab: GraphTab) => void;
-  badge?: string;
+  initialGateCount: number;
+  simplifiedGateCount: number;
 }
 
 const nodeTypes: NodeTypes = {
@@ -99,7 +100,8 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
   data,
   activeTab,
   onTabChange,
-  badge,
+  initialGateCount,
+  simplifiedGateCount,
 }) => {
   const { nodes: layoutedNodes, edges: layoutedEdges } = useMemo(
     () => getLayoutedElements(data),
@@ -124,49 +126,60 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
     }
   }, [rfInstance, layoutedNodes]);
 
-  const badgeStyle =
-    activeTab === 'simplified'
-      ? 'text-emerald-800 bg-emerald-50 border-emerald-200'
-      : 'text-slate-700 bg-slate-100 border-slate-300';
-
   return (
-    <div className="flex flex-col w-full rounded border border-slate-300 bg-white">
-      <div className="flex items-center justify-between px-4 border-b border-slate-200 bg-slate-50">
-        <div className="flex items-center gap-1">
+    <div className="flex flex-col w-full bg-white border border-[#d0d7de] rounded-md overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-2.5 border-b border-[#d0d7de] bg-[#f6f8fa]">
+        <div className="flex items-center gap-4">
           <button
             type="button"
             onClick={() => onTabChange('initial')}
-            className={`px-3 py-2.5 text-xs border-b-2 cursor-pointer transition-colors ${
+            className={`inline-flex items-center gap-1.5 text-sm cursor-pointer transition-colors ${
               activeTab === 'initial'
-                ? 'border-indigo-600 text-indigo-700 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
+                ? 'font-semibold text-[#1f2328]'
+                : 'font-normal text-[#656d76] hover:text-[#1f2328]'
             }`}
           >
-            Initial AIG
+            <span>Initial AIG</span>
+            <span className="bg-[#eaeef2] text-[#1f2328] rounded-full px-2 py-0.5 text-xs font-medium">
+              {initialGateCount}
+            </span>
           </button>
+
           <button
             type="button"
             onClick={() => onTabChange('simplified')}
-            className={`px-3 py-2.5 text-xs border-b-2 cursor-pointer transition-colors ${
+            className={`inline-flex items-center gap-1.5 text-sm cursor-pointer transition-colors ${
               activeTab === 'simplified'
-                ? 'border-indigo-600 text-indigo-700 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
+                ? 'font-semibold text-[#1f2328]'
+                : 'font-normal text-[#656d76] hover:text-[#1f2328]'
             }`}
           >
-            Simplified AIG
+            <span>Simplified AIG</span>
+            <span className="bg-[#eaeef2] text-[#1f2328] rounded-full px-2 py-0.5 text-xs font-medium">
+              {simplifiedGateCount}
+            </span>
           </button>
         </div>
 
-        {badge && (
-          <span className={`px-2 py-0.5 rounded border text-[11px] font-mono ${badgeStyle}`}>
-            {badge}
+        <div className="flex items-center gap-3 text-xs font-mono text-[#656d76]">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 inline-block" /> PI
           </span>
-        )}
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block" /> AND
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" /> PO
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full border-2 border-rose-600 inline-block" /> NOT
+          </span>
+        </div>
       </div>
 
       <div className="relative h-[500px] w-full">
         {nodes.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full font-mono text-sm text-slate-400">
+          <div className="flex flex-col items-center justify-center h-full font-mono text-sm text-[#656d76]">
             <span>No AIG nodes in graph</span>
             <span className="text-xs mt-1">Enter a Boolean equation above</span>
           </div>
@@ -186,14 +199,14 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
             proOptions={{ hideAttribution: true }}
           >
             <Background
-              color="#e2e8f0"
+              color="#d8dee4"
               gap={20}
               size={1}
               variant={BackgroundVariant.Dots}
             />
             <Controls
               showInteractive={false}
-              className="!bg-white !border-slate-300 !fill-slate-700 !text-slate-700 !shadow-none"
+              className="!bg-[#f6f8fa] !border-[#d0d7de] !fill-[#24292f] !text-[#24292f] !shadow-none !rounded-md"
             />
           </ReactFlow>
         )}
