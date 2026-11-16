@@ -9,29 +9,9 @@ interface EquationInputBarProps {
 
 const PRESETS = [
   {
-    name: 'Redundant Literal',
-    equation: 'F = A & B & A & C',
-    desc: 'Simplifies duplicate literal A to A & B & C',
-  },
-  {
     name: 'Redundant SOP',
     equation: 'F = (A & B) | (A & ~B)',
     desc: 'Simplifies 3 AND gates down to A',
-  },
-  {
-    name: 'Absorption',
-    equation: 'F = A | (A & B)',
-    desc: 'Absorbs redundant term (A & B) into A',
-  },
-  {
-    name: 'Distributive',
-    equation: 'F = (A & B) | (A & C)',
-    desc: 'Factors common literal A into A & (B | C)',
-  },
-  {
-    name: '2:1 MUX',
-    equation: 'F = (S & A) | (~S & B)',
-    desc: 'Multiplexer select logic',
   },
   {
     name: 'Consensus Theorem',
@@ -39,39 +19,24 @@ const PRESETS = [
     desc: 'Eliminates redundant consensus term (B & C)',
   },
   {
+    name: 'Distributive',
+    equation: 'F = (A & B) | (A & C)',
+    desc: 'Factors common literal A into A & (B | C)',
+  },
+  {
     name: 'Majority',
     equation: 'F = (A & B) | (B & C) | (A & C)',
-    desc: '3-input majority voter gate',
-  },
-  {
-    name: 'De Morgan Dual',
-    equation: 'F = ~(~A | ~B)',
-    desc: 'Simplifies dual form directly to A & B',
-  },
-  {
-    name: 'Contradiction',
-    equation: 'F = (A & B) & ~A',
-    desc: 'Collapses contradictory product to constant 0',
-  },
-  {
-    name: 'XOR from NAND/OR',
-    equation: 'F = (A | B) & ~(A & B)',
-    desc: 'Synthesizes XOR from OR and NAND',
+    desc: '3-input majority voter gate simplified from 5 to 4 AND gates',
   },
   {
     name: '4-bit Parity',
     equation: 'P = A ^ B ^ C ^ D',
-    desc: 'Cascaded XOR chain balanced for lower depth',
+    desc: 'Cascaded XOR chain balanced from 6 to 4 levels',
   },
   {
-    name: 'Full Adder Carry',
-    equation: 'Cout = (A & B) | (Cin & (A ^ B))',
-    desc: 'Carry logic with XOR and AND-OR gates',
-  },
-  {
-    name: 'Multi-Output',
+    name: 'Full Adder',
     equation: 'Sum = A ^ B ^ Cin; Cout = (A & B) | (Cin & (A ^ B))',
-    desc: 'Full adder with shared A ^ B sub-graph',
+    desc: 'Multi-output full adder sharing A ^ B sub-graph (12 to 9 AND gates)',
   },
 ];
 

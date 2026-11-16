@@ -40,8 +40,8 @@ export function App() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F2F5F3] text-[#101411]">
       <header className="flex items-center px-6 py-3.5 border-b bg-[#F2F5F3] border-[#B6BFB8]">
-        <h1 className="text-sm font-semibold tracking-tight text-[#101411]">
-          And-Inverter Graph Logic Simplifier
+        <h1 className="text-lg font-bold tracking-tight text-[#101411]">
+          AIG-studio
         </h1>
       </header>
 
