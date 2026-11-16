@@ -75,13 +75,13 @@ export const EquationInputBar: React.FC<EquationInputBarProps> = ({
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="e.g. F = (A & B) | (A & ~B)"
-            className="flex-1 font-mono text-sm px-3 py-1.5 rounded-md border border-[#B6BFB8] bg-[#F2F5F3] focus:bg-white text-[#101411] placeholder-[#909692] focus:outline-none focus:border-[#1A61FE] focus:ring-2 focus:ring-[#1A61FE]/20 transition-colors"
+            className="flex-1 h-9 font-mono text-sm px-3 rounded-md border border-[#B6BFB8] bg-[#F2F5F3] focus:bg-white text-[#101411] placeholder-[#909692] focus:outline-none focus:border-[#1A61FE] focus:ring-2 focus:ring-[#1A61FE]/20 transition-colors"
           />
           <button
             type="button"
             onClick={onSynthesize}
             disabled={!value.trim()}
-            className="px-4 py-1.5 rounded-md text-sm font-medium bg-[#F2F5F3] hover:bg-[#E4EBE6] text-[#232925] border border-[#B6BFB8] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors shrink-0"
+            className="h-9 w-24 inline-flex items-center justify-center rounded-md text-xs font-semibold bg-[#F2F5F3] hover:bg-[#E4EBE6] text-[#232925] border border-[#B6BFB8] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors shrink-0"
           >
             Simplify
           </button>

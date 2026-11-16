@@ -1,39 +1,32 @@
 # AIG Studio
 
-**Tech and Tools:**
-![C++17](https://img.shields.io/badge/C%2B%2B17-00599C?style=flat-square)
-![WebAssembly](https://img.shields.io/badge/WebAssembly-654FF0?style=flat-square)
-![React 19](https://img.shields.io/badge/React_19-61DAFB?style=flat-square)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square)
-![React Flow](https://img.shields.io/badge/React_Flow-FF0072?style=flat-square)
-![Graphviz DOT](https://img.shields.io/badge/Graphviz_DOT-30638E?style=flat-square)
-![GNU Make](https://img.shields.io/badge/GNU_Make-A42E2B?style=flat-square)
-![doctest](https://img.shields.io/badge/doctest-2E8B57?style=flat-square)
-
-**Concepts:**
-![Electronic Design Automation](https://img.shields.io/badge/Electronic_Design_Automation-1E293B?style=flat-square)
 ![Logic Synthesis](https://img.shields.io/badge/Logic_Synthesis-0F766E?style=flat-square)
 ![And-Inverter Graph](https://img.shields.io/badge/And--Inverter_Graph-4F46E5?style=flat-square)
 ![Structural Hashing](https://img.shields.io/badge/Structural_Hashing-0284C7?style=flat-square)
 ![DAG Cut Rewriting](https://img.shields.io/badge/DAG_Cut_Rewriting-7C3AED?style=flat-square)
 ![Tree Balancing](https://img.shields.io/badge/Tree_Balancing-059669?style=flat-square)
 ![AIGER / BLIF](https://img.shields.io/badge/AIGER_%2F_BLIF-D97706?style=flat-square)
+![C++17](https://img.shields.io/badge/C%2B%2B17-00599C?style=flat-square)
 
-A C++17 And-Inverter Graph (AIG) library, CLI, and interactive React + WebAssembly Studio for representing, optimising, verifying, and visualising Boolean logic networks in electronic design automation.
+
+A simple And-Inverter Graph library in C++ for representing and manipulating Boolean functions used in logical synthesis and physical design to help optimise gate-level netlists in digital design. This project was intially written  after taking the course `Logical Synthesis and Physical` Design at the `Technical University of Munich`.
+
+This library has been updated to include an interactive React + WebAssembly Studio for representing, optimising, verifying, and visualising Boolean logic networks in electronic design automation.
+
+![GUI](Images/GUI.png)
+
 
 ---
 
 ## Features
 
-- **Multi-Format I/O:** Auto-detects, parses, and exports ASCII AIGER (`.aag`), binary AIGER (`.aig`), and BLIF (`.blif`).
-- **Structural Hashing (**`strash`**):** Unique-table gate deduplication with on-the-fly constant folding, idempotence, and two-level algebraic reduction.
-- **Dead-Node Sweeping (**`sweep`**):** Backward reachability pruning from primary outputs and duplicate merging.
-- **Tree Balancing (**`balance`**):** Huffman-style min-depth restructuring of associative AND and XOR cones.
-- **DAG-Aware Rewriting (**`rewrite`**):** 4-input cut enumeration with a 16-bit truth-table optimal AIG database and MFFC gain evaluation.
-- **Circuit Analysis and Visualisation:** Depth, fan-out analysis, truth-table simulation, formal equivalence checking, Graphviz DOT export, and ASCII cone printing.
-- **Boolean Expression Engine:** Parses multi-output expressions (`*` AND, `+` / `|` OR, `^` XOR, `~` / `!` / `'` NOT) into JSON DAGs for CLI and web visualisation.
+- **Multi-Format I/O:** Parse and export ASCII AIGER (`.aag`), binary AIGER (`.aig`), and BLIF (`.blif`).
+- **Structural Hashing (**`strash`**):** Unique-table deduplication with on-the-fly constant folding and two-level algebraic reduction.
+- **Dead-Node Sweeping (**`sweep`**):** Backward reachability pruning and duplicate gate merging.
+- **Tree Balancing (**`balance`**):** Min-depth restructuring of associative AND and XOR cones.
+- **DAG-Aware Rewriting (**`rewrite`**):** 4-input cut enumeration with a 16-bit optimal AIG database and MFFC gain evaluation.
+- **Analysis & Visualisation:** Depth, fan-out, truth tables, equivalence checking, Graphviz DOT export, and ASCII cone trees.
+- **Boolean Expression Engine:** Parse multi-output expressions (`*`, `+`/`|`, `^`, `~`/`!`/`'`) into JSON DAGs for CLI and web.
 
 ---
 

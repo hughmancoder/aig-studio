@@ -33,7 +33,7 @@ export const SimplifiedExpressionBar: React.FC<SimplifiedExpressionBarProps> = (
       <button
         type="button"
         onClick={handleCopy}
-        className="px-3 py-1.5 rounded-md border border-[#B6BFB8] bg-[#F2F5F3] hover:bg-[#E4EBE6] text-[#232925] text-xs font-medium shrink-0 cursor-pointer transition-colors"
+        className="h-9 w-24 inline-flex items-center justify-center rounded-md border border-[#B6BFB8] bg-[#F2F5F3] hover:bg-[#E4EBE6] text-[#232925] text-xs font-semibold shrink-0 cursor-pointer transition-colors"
       >
         {copied ? 'Copied' : 'Copy'}
       </button>
