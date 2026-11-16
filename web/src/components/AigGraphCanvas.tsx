@@ -3,7 +3,6 @@ import {
   ReactFlow,
   Background,
   Controls,
-  MiniMap,
   BackgroundVariant,
   useNodesState,
   useEdgesState,
@@ -20,7 +19,7 @@ interface AigGraphCanvasProps {
   data: AigGraphData;
   title?: string;
   badge?: string;
-  badgeColor?: 'indigo' | 'emerald' | 'amber' | 'slate';
+  accent?: 'neutral' | 'emerald';
   theme?: 'dark' | 'light';
 }
 
@@ -35,16 +34,16 @@ const edgeTypes: EdgeTypes = {
   aigEdge: AigCustomEdge as any,
 };
 
-const NODE_WIDTH = 100;
-const NODE_HEIGHT = 48;
+const NODE_WIDTH = 96;
+const NODE_HEIGHT = 40;
 
-function getLayoutedElements(graphData: AigGraphData) {
+function getLayoutedElements(graphData: AigGraphData, theme: 'dark' | 'light') {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
   dagreGraph.setGraph({
     rankdir: 'TB',
-    nodesep: 50,
-    ranksep: 70,
+    nodesep: 48,
+    ranksep: 64,
     align: 'DL',
   });
 
@@ -71,6 +70,7 @@ function getLayoutedElements(graphData: AigGraphData) {
         label: node.label,
         level: node.level,
         type: node.type,
+        theme,
       },
     };
   });
@@ -82,12 +82,12 @@ function getLayoutedElements(graphData: AigGraphData) {
       source: edge.source,
       target: edge.target,
       type: 'aigEdge',
-      data: { inverted: isInverted },
+      data: { inverted: isInverted, theme },
       markerEnd: {
         type: MarkerType.ArrowClosed,
-        width: 14,
-        height: 14,
-        color: isInverted ? '#f43f5e' : '#64748b',
+        width: 13,
+        height: 13,
+        color: isInverted ? '#e11d48' : theme === 'dark' ? '#94a3b8' : '#64748b',
       },
     };
   });
@@ -99,13 +99,13 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
   data,
   title,
   badge,
-  badgeColor = 'indigo',
-  theme = 'dark',
+  accent = 'neutral',
+  theme = 'light',
 }) => {
   const isDark = theme === 'dark';
   const { nodes: layoutedNodes, edges: layoutedEdges } = useMemo(
-    () => getLayoutedElements(data),
-    [data]
+    () => getLayoutedElements(data, theme),
+    [data, theme]
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
@@ -126,103 +126,82 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
     }
   }, [rfInstance, layoutedNodes]);
 
-  const badgeColorClasses = {
-    indigo: isDark
-      ? 'bg-indigo-950 text-indigo-300 border-indigo-700/60'
-      : 'bg-indigo-50 text-indigo-700 border-indigo-200',
-    emerald: isDark
-      ? 'bg-emerald-950 text-emerald-300 border-emerald-700/60'
-      : 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    amber: isDark
-      ? 'bg-amber-950 text-amber-300 border-amber-700/60'
-      : 'bg-amber-50 text-amber-700 border-amber-200',
-    slate: isDark
-      ? 'bg-slate-800 text-slate-300 border-slate-600/60'
-      : 'bg-slate-100 text-slate-700 border-slate-300',
-  }[badgeColor];
+  const badgeStyle =
+    accent === 'emerald'
+      ? isDark
+        ? 'text-emerald-300 bg-emerald-950/60 border-emerald-800'
+        : 'text-emerald-800 bg-emerald-50 border-emerald-200'
+      : isDark
+      ? 'text-slate-300 bg-slate-800 border-slate-700'
+      : 'text-slate-700 bg-slate-100 border-slate-300';
 
   return (
     <div
-      className={`relative w-full h-full min-h-[460px] rounded-2xl overflow-hidden border shadow-xl backdrop-blur-sm transition-colors ${
-        isDark ? 'border-slate-800/80 bg-slate-950/70' : 'border-slate-200 bg-white/95'
+      className={`flex flex-col w-full rounded border ${
+        isDark ? 'border-slate-800 bg-slate-950' : 'border-slate-300 bg-white'
       }`}
     >
-      {/* Top Header / Status bar */}
       {(title || badge) && (
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2.5 pointer-events-none">
+        <div
+          className={`flex items-center justify-between px-4 py-2.5 border-b ${
+            isDark ? 'border-slate-800 bg-slate-900/60' : 'border-slate-200 bg-slate-50'
+          }`}
+        >
           {title && (
-            <div
-              className={`px-3 py-1.5 rounded-lg border text-xs font-semibold shadow-md ${
-                isDark
-                  ? 'bg-slate-900/90 border-slate-800 text-slate-200'
-                  : 'bg-white/95 border-slate-200 text-slate-800'
-              }`}
-            >
+            <span className={`text-xs font-semibold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
               {title}
-            </div>
+            </span>
           )}
           {badge && (
-            <div
-              className={`px-2.5 py-1 rounded-md text-xs font-mono font-medium border shadow-sm ${badgeColorClasses}`}
-            >
+            <span className={`px-2 py-0.5 rounded border text-[11px] font-mono ${badgeStyle}`}>
               {badge}
-            </div>
+            </span>
           )}
         </div>
       )}
 
-      {/* Empty State */}
-      {nodes.length === 0 ? (
-        <div
-          className={`flex flex-col items-center justify-center h-full font-mono text-sm ${
-            isDark ? 'text-slate-500' : 'text-slate-400'
-          }`}
-        >
-          <span>No AIG nodes in graph</span>
-          <span className="text-xs text-slate-400 mt-1">Enter a Boolean equation to synthesize</span>
-        </div>
-      ) : (
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onInit={setRfInstance}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          nodeTypes={nodeTypes}
-          edgeTypes={edgeTypes}
-          fitView
-          fitViewOptions={{ padding: 0.25 }}
-          minZoom={0.2}
-          maxZoom={2.5}
-          proOptions={{ hideAttribution: true }}
-        >
-          <Background
-            color={isDark ? '#334155' : '#cbd5e1'}
-            gap={20}
-            size={1}
-            variant={BackgroundVariant.Dots}
-          />
-          <Controls
-            className={
-              isDark
-                ? '!bg-slate-900 !border-slate-700 !fill-slate-300 !text-slate-300'
-                : '!bg-white !border-slate-300 !fill-slate-700 !text-slate-700 shadow-md'
-            }
-          />
-          <MiniMap
-            nodeColor={(node) => {
-              if (node.type === 'PI') return '#06b6d4';
-              if (node.type === 'AND') return '#8b5cf6';
-              if (node.type === 'PO') return '#f59e0b';
-              return '#64748b';
-            }}
-            maskColor={isDark ? 'rgba(11, 15, 25, 0.75)' : 'rgba(241, 245, 249, 0.75)'}
-            className={`!border rounded-lg overflow-hidden !bottom-4 !right-4 ${
-              isDark ? '!bg-slate-900/90 !border-slate-800' : '!bg-white/95 !border-slate-300 shadow-md'
+      <div className="relative h-[480px] w-full">
+        {nodes.length === 0 ? (
+          <div
+            className={`flex flex-col items-center justify-center h-full font-mono text-sm ${
+              isDark ? 'text-slate-500' : 'text-slate-400'
             }`}
-          />
-        </ReactFlow>
-      )}
+          >
+            <span>No AIG nodes in graph</span>
+            <span className="text-xs mt-1">Enter a Boolean equation above</span>
+          </div>
+        ) : (
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onInit={setRfInstance}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
+            fitView
+            fitViewOptions={{ padding: 0.25 }}
+            minZoom={0.2}
+            maxZoom={2.5}
+            proOptions={{ hideAttribution: true }}
+          >
+            <Background
+              color={isDark ? '#1e293b' : '#e2e8f0'}
+              gap={20}
+              size={1}
+              variant={BackgroundVariant.Dots}
+            />
+            <Controls
+              showInteractive={false}
+              className={
+                isDark
+                  ? '!bg-slate-900 !border-slate-700 !fill-slate-300 !text-slate-300 !shadow-none'
+                  : '!bg-white !border-slate-300 !fill-slate-700 !text-slate-700 !shadow-none'
+              }
+            />
+          </ReactFlow>
+        )}
+      </div>
     </div>
   );
 };

@@ -24,29 +24,24 @@ export const AigCustomEdge = memo(({
   });
 
   const isInverted = Boolean(data?.inverted);
+  const isDark = data?.theme === 'dark';
 
   const edgeStyle = isInverted
     ? {
         ...style,
-        stroke: '#f43f5e', // rose-500
-        strokeWidth: 2,
-        strokeDasharray: '6, 4',
+        stroke: '#e11d48',
+        strokeWidth: 1.75,
+        strokeDasharray: '5 4',
       }
     : {
         ...style,
-        stroke: '#64748b', // slate-500
-        strokeWidth: 2,
+        stroke: isDark ? '#94a3b8' : '#64748b',
+        strokeWidth: 1.75,
       };
 
   return (
     <>
-      <BaseEdge
-        id={id}
-        path={edgePath}
-        style={edgeStyle}
-        markerEnd={markerEnd}
-        className={isInverted ? 'inverted-edge' : ''}
-      />
+      <BaseEdge id={id} path={edgePath} style={edgeStyle} markerEnd={markerEnd} />
       {isInverted && (
         <EdgeLabelRenderer>
           <div
@@ -55,11 +50,11 @@ export const AigCustomEdge = memo(({
               transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
               pointerEvents: 'all',
             }}
-            className="flex items-center justify-center w-5 h-5 rounded-full bg-slate-950 border-2 border-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)] z-10"
+            className={`w-3.5 h-3.5 rounded-full border-2 border-rose-600 z-10 ${
+              isDark ? 'bg-slate-950' : 'bg-white'
+            }`}
             title="Inverted / Complemented Edge (NOT)"
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
-          </div>
+          />
         </EdgeLabelRenderer>
       )}
     </>

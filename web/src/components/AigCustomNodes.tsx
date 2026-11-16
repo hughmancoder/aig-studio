@@ -1,74 +1,115 @@
 import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 
-export const PiNode = memo(({ data }: { data: { label: string } }) => {
+interface NodeData {
+  label: string;
+  level?: number;
+  theme?: 'dark' | 'light';
+}
+
+export const PiNode = memo(({ data }: { data: NodeData }) => {
+  const isDark = data.theme === 'dark';
   return (
-    <div className="group relative flex items-center justify-center px-4 py-2 rounded-xl bg-slate-900/90 border-2 border-cyan-500/60 shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.35)] transition-all min-w-[70px]">
-      <div className="absolute -top-2 left-2 px-1.5 py-0.2 text-[9px] font-mono tracking-wider uppercase bg-cyan-950 text-cyan-400 border border-cyan-800 rounded">
+    <div
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded border font-mono min-w-[72px] justify-center ${
+        isDark
+          ? 'bg-slate-900 border-cyan-500 text-cyan-100'
+          : 'bg-cyan-50 border-cyan-600 text-cyan-950'
+      }`}
+    >
+      <span
+        className={`text-[10px] font-semibold uppercase tracking-wider ${
+          isDark ? 'text-cyan-400' : 'text-cyan-700'
+        }`}
+      >
         IN
-      </div>
-      <span className="font-mono font-bold text-sm text-cyan-200">{data.label}</span>
+      </span>
+      <span className="font-bold text-sm">{data.label}</span>
       <Handle
         type="source"
         position={Position.Bottom}
-        className="!w-3 !h-3 !bg-cyan-400 !border-2 !border-slate-900 transition-transform group-hover:scale-125"
+        className="!w-2 !h-2 !border-0 !bg-cyan-600"
       />
     </div>
   );
 });
 
-export const AndNode = memo(({ data }: { data: { label: string; level?: number } }) => {
+export const AndNode = memo(({ data }: { data: NodeData }) => {
+  const isDark = data.theme === 'dark';
   return (
-    <div className="group relative flex flex-col items-center justify-center px-4 py-2.5 rounded-2xl bg-slate-900/95 border-2 border-indigo-500/60 shadow-[0_0_18px_rgba(99,102,241,0.2)] hover:border-indigo-400 hover:shadow-[0_0_25px_rgba(99,102,241,0.4)] transition-all min-w-[85px]">
+    <div
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded border font-mono min-w-[82px] justify-center ${
+        isDark
+          ? 'bg-slate-900 border-indigo-400 text-indigo-100'
+          : 'bg-indigo-50 border-indigo-600 text-indigo-950'
+      }`}
+    >
       <Handle
         type="target"
         position={Position.Top}
-        className="!w-3 !h-3 !bg-indigo-400 !border-2 !border-slate-900 transition-transform group-hover:scale-125"
+        className="!w-2 !h-2 !border-0 !bg-indigo-600"
       />
-      <div className="flex items-center gap-1.5">
-        <span className="font-mono font-extrabold text-base text-indigo-200">&</span>
-        {data.level !== undefined && (
-          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-950/80 text-indigo-400 border border-indigo-800/60">
-            L{data.level}
-          </span>
-        )}
-      </div>
-      {data.label && data.label !== '&' && (
-        <span className="text-[10px] font-mono text-slate-400 mt-0.5">{data.label}</span>
+      <span className="font-bold text-sm">AND</span>
+      {data.level !== undefined && (
+        <span
+          className={`text-[10px] px-1 rounded ${
+            isDark ? 'bg-indigo-950 text-indigo-300' : 'bg-indigo-100 text-indigo-700'
+          }`}
+        >
+          L{data.level}
+        </span>
       )}
       <Handle
         type="source"
         position={Position.Bottom}
-        className="!w-3 !h-3 !bg-indigo-400 !border-2 !border-slate-900 transition-transform group-hover:scale-125"
+        className="!w-2 !h-2 !border-0 !bg-indigo-600"
       />
     </div>
   );
 });
 
-export const PoNode = memo(({ data }: { data: { label: string } }) => {
+export const PoNode = memo(({ data }: { data: NodeData }) => {
+  const isDark = data.theme === 'dark';
   return (
-    <div className="group relative flex items-center justify-center px-4 py-2 rounded-xl bg-slate-900/90 border-2 border-amber-500/60 shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:border-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-all min-w-[70px]">
+    <div
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded border font-mono min-w-[72px] justify-center ${
+        isDark
+          ? 'bg-slate-900 border-amber-500 text-amber-100'
+          : 'bg-amber-50 border-amber-600 text-amber-950'
+      }`}
+    >
       <Handle
         type="target"
         position={Position.Top}
-        className="!w-3 !h-3 !bg-amber-400 !border-2 !border-slate-900 transition-transform group-hover:scale-125"
+        className="!w-2 !h-2 !border-0 !bg-amber-600"
       />
-      <div className="absolute -bottom-2 left-2 px-1.5 py-0.2 text-[9px] font-mono tracking-wider uppercase bg-amber-950 text-amber-400 border border-amber-800 rounded">
+      <span
+        className={`text-[10px] font-semibold uppercase tracking-wider ${
+          isDark ? 'text-amber-400' : 'text-amber-700'
+        }`}
+      >
         OUT
-      </div>
-      <span className="font-mono font-bold text-sm text-amber-200">{data.label}</span>
+      </span>
+      <span className="font-bold text-sm">{data.label}</span>
     </div>
   );
 });
 
-export const ConstNode = memo(({ data }: { data: { label: string } }) => {
+export const ConstNode = memo(({ data }: { data: NodeData }) => {
+  const isDark = data.theme === 'dark';
   return (
-    <div className="group relative flex items-center justify-center px-3 py-1.5 rounded-lg bg-slate-900/90 border-2 border-slate-600/60 shadow-sm min-w-[50px]">
-      <span className="font-mono font-bold text-xs text-slate-400">{data.label || 'CONST 0'}</span>
+    <div
+      className={`flex items-center justify-center px-3 py-1.5 rounded border font-mono min-w-[54px] ${
+        isDark
+          ? 'bg-slate-900 border-slate-500 text-slate-200'
+          : 'bg-slate-100 border-slate-500 text-slate-900'
+      }`}
+    >
+      <span className="font-bold text-xs">{data.label || '0'}</span>
       <Handle
         type="source"
         position={Position.Bottom}
-        className="!w-2.5 !h-2.5 !bg-slate-400 !border-2 !border-slate-900"
+        className="!w-2 !h-2 !border-0 !bg-slate-500"
       />
     </div>
   );
