@@ -38,7 +38,7 @@ export function App() {
       : result?.initial_graph || { nodes: [], edges: [] };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F2F5F3] text-[#101411]">
+    <div className="flex flex-col min-h-screen bg-white text-[#101411]">
       <header className="flex items-center px-6 py-3.5 border-b bg-[#F2F5F3] border-[#B6BFB8]">
         <h1 className="text-lg font-bold tracking-tight text-[#101411]">
           AIG-studio
@@ -72,11 +72,7 @@ export function App() {
         />
 
         {result && result.status === 'ok' && (
-          <MetricsPanel
-            stats={result.stats}
-            outputs={result.outputs}
-            equivalent={result.equivalent}
-          />
+          <MetricsPanel stats={result.stats} />
         )}
       </main>
     </div>

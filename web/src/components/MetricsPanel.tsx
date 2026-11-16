@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { AigStats, OutputMapping } from '../lib/aigTypes';
+import type { AigStats } from '../lib/aigTypes';
 
 interface SimplifiedExpressionBarProps {
   simplifiedExpr: string;
@@ -43,15 +43,9 @@ export const SimplifiedExpressionBar: React.FC<SimplifiedExpressionBarProps> = (
 
 interface MetricsPanelProps {
   stats: AigStats;
-  outputs?: OutputMapping[];
-  equivalent: boolean | null;
 }
 
-export const MetricsPanel: React.FC<MetricsPanelProps> = ({
-  stats,
-  outputs = [],
-  equivalent,
-}) => {
+export const MetricsPanel: React.FC<MetricsPanelProps> = ({ stats }) => {
   const andReduction =
     stats.initial_and_nodes > 0
       ? Math.round(
@@ -67,14 +61,14 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
       : 0;
 
   return (
-    <section className="bg-white border border-[#B6BFB8] rounded-md grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-[#B6BFB8] text-[#101411]">
+    <section className="bg-white border border-[#B6BFB8] rounded-md grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-[#B6BFB8] text-[#101411]">
       <div className="p-4 flex flex-col justify-between">
         <div className="flex items-center justify-between gap-2">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
             AND Gates
           </span>
           {andReduction > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#BFFFD1] text-[#08872B] border border-[#8CF2A6]">
+            <span className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#BFFFD1] text-[#08872B] border border-[#8CF2A6]">
               -{andReduction}%
             </span>
           )}
@@ -92,7 +86,7 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
             Logic Depth
           </span>
           {levelReduction > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#BFFFD1] text-[#08872B] border border-[#8CF2A6]">
+            <span className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#BFFFD1] text-[#08872B] border border-[#8CF2A6]">
               -{levelReduction}%
             </span>
           )}
@@ -101,37 +95,6 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
           <span className="text-[#909692]">Level {stats.initial_levels}</span>
           <span className="mx-1.5 text-[#909692]">&rarr;</span>
           <span className="text-[#101411]">Level {stats.final_levels}</span>
-        </div>
-      </div>
-
-      <div className="p-4 flex flex-col justify-between">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
-          Primary I/O
-        </span>
-        <div className="font-mono text-sm font-medium mt-1.5 text-[#232925]">
-          {stats.num_inputs} Inputs &middot; {stats.num_outputs} Outputs
-          {outputs.length > 1 ? ` (${outputs.length})` : ''}
-        </div>
-      </div>
-
-      <div className="p-4 flex flex-col justify-between">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#909692]">
-          Equivalence
-        </span>
-        <div
-          className={`text-sm font-semibold mt-1.5 ${
-            equivalent === true
-              ? 'text-[#08872B]'
-              : equivalent === false
-              ? 'text-[#FA4549]'
-              : 'text-[#909692]'
-          }`}
-        >
-          {equivalent === true
-            ? 'Formally Equivalent'
-            : equivalent === false
-            ? 'Logic Mismatch'
-            : 'N/A'}
         </div>
       </div>
     </section>
