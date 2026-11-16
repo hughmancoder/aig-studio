@@ -38,6 +38,11 @@ const PRESETS = [
     equation: 'Sum = A ^ B ^ Cin; Cout = (A & B) | (Cin & (A ^ B))',
     desc: 'Multi-output full adder sharing A ^ B sub-graph (12 to 9 AND gates)',
   },
+  {
+    name: "De Morgan's Law",
+    equation: 'F = ~(~A | ~B)',
+    desc: 'Simplifies dual form ~(~A | ~B) directly to A & B',
+  },
 ];
 
 export const EquationInputBar: React.FC<EquationInputBarProps> = ({
