@@ -79,22 +79,21 @@ export function App() {
           </div>
         )}
 
+        {result && result.status === 'ok' && (
+          <MetricsPanel
+            stats={result.stats}
+            simplifiedExpr={result.simplified_expr}
+            outputs={result.outputs}
+            equivalent={result.equivalent}
+          />
+        )}
+
         <AigGraphCanvas
           data={activeGraph}
           activeTab={activeTab}
           onTabChange={setActiveTab}
           badge={activeBadge}
         />
-
-        {result && result.status === 'ok' && (
-          <MetricsPanel
-            stats={result.stats}
-            originalExpr={result.original_expr}
-            simplifiedExpr={result.simplified_expr}
-            outputs={result.outputs}
-            equivalent={result.equivalent}
-          />
-        )}
       </main>
     </div>
   );

@@ -90,27 +90,32 @@ export const EquationInputBar: React.FC<EquationInputBarProps> = ({
 
   return (
     <section className="flex flex-col gap-3 w-full border rounded p-4 bg-white border-slate-300">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
-        <label htmlFor="equation-input" className="sr-only">
-          Boolean Expression
-        </label>
-        <input
-          id="equation-input"
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="e.g. F = (A & B) | (A & ~B)"
-          className="flex-1 font-mono text-sm px-3 py-2 rounded border border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600"
-        />
-        <button
-          type="button"
-          onClick={onSynthesize}
-          disabled={!value.trim()}
-          className="px-4 py-2 rounded text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors shrink-0"
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="equation-input"
+          className="text-[11px] font-semibold uppercase tracking-wider text-slate-500"
         >
-          Simplify
-        </button>
+          Input
+        </label>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+          <input
+            id="equation-input"
+            type="text"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="e.g. F = (A & B) | (A & ~B)"
+            className="flex-1 font-mono text-sm px-3 py-2 rounded border border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600"
+          />
+          <button
+            type="button"
+            onClick={onSynthesize}
+            disabled={!value.trim()}
+            className="px-4 py-2 rounded text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors shrink-0"
+          >
+            Simplify
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5">

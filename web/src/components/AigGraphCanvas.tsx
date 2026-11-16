@@ -135,17 +135,6 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
         <div className="flex items-center gap-1">
           <button
             type="button"
-            onClick={() => onTabChange('simplified')}
-            className={`px-3 py-2.5 text-xs border-b-2 cursor-pointer transition-colors ${
-              activeTab === 'simplified'
-                ? 'border-indigo-600 text-indigo-700 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
-            }`}
-          >
-            Simplified AIG
-          </button>
-          <button
-            type="button"
             onClick={() => onTabChange('initial')}
             className={`px-3 py-2.5 text-xs border-b-2 cursor-pointer transition-colors ${
               activeTab === 'initial'
@@ -154,6 +143,17 @@ export const AigGraphCanvas: React.FC<AigGraphCanvasProps> = ({
             }`}
           >
             Initial AIG
+          </button>
+          <button
+            type="button"
+            onClick={() => onTabChange('simplified')}
+            className={`px-3 py-2.5 text-xs border-b-2 cursor-pointer transition-colors ${
+              activeTab === 'simplified'
+                ? 'border-indigo-600 text-indigo-700 font-semibold'
+                : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
+            }`}
+          >
+            Simplified AIG
           </button>
         </div>
 

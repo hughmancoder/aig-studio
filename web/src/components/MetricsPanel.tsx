@@ -3,7 +3,6 @@ import type { AigStats, OutputMapping } from '../lib/aigTypes';
 
 interface MetricsPanelProps {
   stats: AigStats;
-  originalExpr: string;
   simplifiedExpr: string;
   outputs?: OutputMapping[];
   equivalent: boolean | null;
@@ -11,7 +10,6 @@ interface MetricsPanelProps {
 
 export const MetricsPanel: React.FC<MetricsPanelProps> = ({
   stats,
-  originalExpr,
   simplifiedExpr,
   outputs = [],
   equivalent,
@@ -40,7 +38,7 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
 
   return (
     <section className="border border-slate-300 rounded grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200 bg-white text-slate-900">
-      <div className="lg:col-span-6 p-4 flex items-start justify-between gap-4 min-w-0">
+      <div className="lg:col-span-6 p-4 flex items-center justify-between gap-4 min-w-0">
         <div className="min-w-0 flex-1">
           <div className="text-[11px] font-semibold uppercase tracking-wider mb-1 text-slate-500">
             Simplified Expression
@@ -50,9 +48,6 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
             title={simplifiedExpr}
           >
             {simplifiedExpr || '(empty)'}
-          </div>
-          <div className="text-xs font-mono truncate mt-1 text-slate-500" title={originalExpr}>
-            Input: {originalExpr}
           </div>
         </div>
 
